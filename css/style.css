@@ -545,7 +545,7 @@ footer p {
 }
 
 .media-description {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     line-height: 1.7;
     color: var(--text);
     margin-bottom: 2rem;
@@ -582,3 +582,4 @@ footer p {
         font-size: 1.75rem;
     }
 }
+
