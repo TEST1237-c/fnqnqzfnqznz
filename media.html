@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Stream</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <header>
+        <a href="index.html" class="logo">Nova Stream</a>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="films.html">Films</a>
+            <a href="series.html">Séries</a>
+            <a href="admin.html">+ Ajouter</a>
+        </nav>
+    </header>
+
+    <main class="media-detail-main">
+        <section id="mediaDetail" class="media-detail hidden">
+            <div class="media-player-wrap">
+                <video id="videoPlayer" controls playsinline poster="">
+                    <source id="videoSource" src="" type="video/mp4">
+                </video>
+            </div>
+            <div class="media-detail-info">
+                <span id="mediaBadge" class="media-badge">Film</span>
+                <h1 id="mediaTitle"></h1>
+                <div id="mediaMeta" class="media-meta"></div>
+                <p id="mediaDescription" class="media-description"></p>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/config.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        (function() {
+            const params = new URLSearchParams(location.search);
+            const id = params.get('id');
+            const type = params.get('type') || 'film';
+            const cat = type === 'serie' ? 'serie' : 'film';
+
+            const detail = document.getElementById('mediaDetail');
+
+            function showMedia(item) {
+                if (!item) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+                detail.classList.remove('hidden');
+
+                document.getElementById('mediaBadge').textContent = type === 'serie' ? 'Série' : 'Film';
+                document.getElementById('mediaTitle').textContent = item.title;
+
+                const meta = [];
+                if (item.duration && item.duration !== '-') meta.push(item.duration + ' min');
+                if (item.year && item.year !== '-') meta.push(item.year);
+                if (item.genre && item.genre !== '-') meta.push(item.genre);
+                document.getElementById('mediaMeta').textContent = meta.join(' • ') || '-';
+
+                const descEl = document.getElementById('mediaDescription');
+                if (item.description) {
+                    descEl.textContent = item.description;
+                    descEl.classList.remove('hidden');
+                } else {
+                    descEl.textContent = 'Aucune description.';
+                    descEl.classList.add('media-description-empty');
+                }
+
+                document.title = item.title + ' - Nova Stream';
+
+                const vid = document.getElementById('videoPlayer');
+                const videoSource = document.getElementById('videoSource');
+                if (vid && videoSource) {
+                    vid.poster = item.image || '';
+                    videoSource.src = item.videoUrl;
+                    vid.load();
+                }
+            }
+
+            loadContentAsync().then(() => {
+                const item = getItemById(cat, id);
+                showMedia(item);
+            });
+        })();
+    </script>
+</body>
+</html>

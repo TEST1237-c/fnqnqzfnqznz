@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter - Nova Stream Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <header>
+        <a href="index.html" class="logo">Nova Stream</a>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="films.html">Films</a>
+            <a href="series.html">Séries</a>
+            <a href="admin.html" class="active">+ Ajouter</a>
+            <a href="login.html" id="navLogin">Se connecter</a>
+            <a href="#" id="logoutBtn" class="btn-logout hidden">Déconnexion</a>
+        </nav>
+    </header>
+
+    <main class="admin-main" id="adminContent">
+        <section class="admin-section">
+            <h1>Ajouter un film ou une série</h1>
+            <p class="admin-desc">Remplis le formulaire pour ajouter du contenu sur le site.</p>
+
+            <form id="addForm" class="admin-form">
+                <input type="hidden" id="editId" value="">
+                <input type="hidden" id="editCat" value="">
+                <div class="form-group">
+                    <label for="category">Catégorie</label>
+                    <select id="category" name="category" required>
+                        <option value="film">Film</option>
+                        <option value="serie">Série</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Titre</label>
+                    <input type="text" id="title" name="title" placeholder="Ex: Mon film préféré" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Image</label>
+                    <div class="image-options">
+                        <label class="option-tab active" data-option="file">
+                            <input type="radio" name="imgType" value="file" checked> Fichier
+                        </label>
+                        <label class="option-tab" data-option="url">
+                            <input type="radio" name="imgType" value="url"> URL
+                        </label>
+                    </div>
+                    <div id="imgFileWrap" class="input-wrap">
+                        <input type="file" id="imageFile" accept="image/*">
+                    </div>
+                    <div id="imgUrlWrap" class="input-wrap hidden">
+                        <input type="text" id="imageUrl" placeholder="https://... ou image/nom.png">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Résumé ou synopsis du film/série..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="videoUrl">Lien vidéo (URL du streaming)</label>
+                    <input type="url" id="videoUrl" name="videoUrl" placeholder="https://..." required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="duration">Durée (min)</label>
+                        <input type="text" id="duration" name="duration" placeholder="125">
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Année</label>
+                        <input type="text" id="year" name="year" placeholder="2025">
+                    </div>
+                    <div class="form-group">
+                        <label for="genre">Genre</label>
+                        <input type="text" id="genre" name="genre" placeholder="Drame, Animation...">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">Ajouter au site</button>
+                <button type="button" class="btn-cancel hidden" id="cancelEditBtn">Annuler la modification</button>
+            </form>
+        </section>
+
+        <section class="admin-list">
+            <h2>Contenu actuel</h2>
+            <div class="list-tabs">
+                <button class="list-tab active" data-list="films">Films</button>
+                <button class="list-tab" data-list="series">Séries</button>
+            </div>
+            <div id="filmsList" class="content-list"></div>
+            <div id="seriesList" class="content-list hidden"></div>
+        </section>
+    </main>
+
+    <div id="adminLoginPrompt" class="admin-login-prompt hidden">
+        <p>Tu dois te connecter pour accéder à l'admin.</p>
+        <a href="login.html" class="btn-submit" style="display:inline-block;text-align:center;text-decoration:none">Se connecter</a>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        if (!isLoggedIn()) {
+            document.getElementById('adminContent').classList.add('hidden');
+            document.getElementById('adminLoginPrompt').classList.remove('hidden');
+        } else {
+            document.getElementById('navLogin').classList.add('hidden');
+            document.getElementById('logoutBtn').classList.remove('hidden');
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                logout();
+                window.location.href = 'login.html';
+            });
+        }
+    </script>
+</body>
+</html>

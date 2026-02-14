@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Séries - Nova Stream</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <header>
+        <a href="index.html" class="logo">Nova Stream</a>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="films.html">Films</a>
+            <a href="series.html" class="active">Séries</a>
+            <a href="admin.html">+ Ajouter</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <h1>Séries</h1>
+            <p>Toutes nos séries en streaming gratuit.</p>
+        </section>
+
+        <section class="category-section">
+            <div id="seriesGrid" class="media-grid"></div>
+        </section>
+
+        <footer>
+            <p>© Nova Stream — Streaming gratuit</p>
+        </footer>
+    </main>
+
+    <div class="modal-overlay" id="playerModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="close-btn" id="closeModal" aria-label="Fermer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="video-wrapper">
+                <video id="videoPlayer" controls playsinline>
+                    <source id="videoSource" src="" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/load-content.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        loadContentAsync().then(() => {
+            const content = getContent();
+            renderMediaGrid(document.getElementById('seriesGrid'), content.series, 'series');
+        });
+    </script>
+</body>
+</html>

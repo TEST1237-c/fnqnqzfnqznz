@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Nova Stream Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <header>
+        <a href="index.html" class="logo">Nova Stream</a>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="films.html">Films</a>
+            <a href="series.html">Séries</a>
+        </nav>
+    </header>
+
+    <main class="admin-main">
+        <section class="admin-section login-section">
+            <h1>Connexion Admin</h1>
+            <p class="admin-desc">Connecte-toi pour ajouter des films et séries.</p>
+
+            <form id="loginForm" class="admin-form">
+                <div id="loginError" class="msg-error hidden"></div>
+                <div class="form-group">
+                    <label for="username">Identifiant</label>
+                    <input type="text" id="username" name="username" placeholder="Ton identifiant" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" placeholder="Ton mot de passe" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn-submit">Se connecter</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script>
+        if (isLoggedIn()) {
+            window.location.href = 'admin.html';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const errorEl = document.getElementById('loginError');
+
+            if (login(username, password)) {
+                window.location.href = 'admin.html';
+            } else {
+                errorEl.textContent = 'Identifiant ou mot de passe incorrect.';
+                errorEl.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Stream - Films et séries en streaming</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <header>
+        <a href="index.html" class="logo">Nova Stream</a>
+        <nav>
+            <a href="index.html" class="active">Accueil</a>
+            <a href="films.html">Films</a>
+            <a href="series.html">Séries</a>
+            <a href="admin.html">+ Ajouter</a>
+            <a href="login.html" id="navLogin">Se connecter</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-bg hero-bg-default">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <span class="hero-badge">Bienvenue</span>
+                <h1>Nova Stream</h1>
+                <p>Découvre des films et séries en streaming gratuit. Ajoute ton contenu et partage-le avec tout le monde.</p>
+                <div class="hero-actions">
+                    <a href="films.html" class="btn-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        Voir les films
+                    </a>
+                    <a href="series.html" class="btn-play btn-play-outline">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        Voir les séries
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="category-section">
+            <h2>Découvrir</h2>
+            <div class="media-grid">
+                <a href="films.html" class="film-card">
+                    <div class="film-poster">
+                        <div class="placeholder-poster">Films</div>
+                        <div class="play-overlay">
+                            <span class="play-icon"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
+                        </div>
+                    </div>
+                    <div class="film-info">
+                        <h3>Films</h3>
+                        <span class="film-meta">Voir tous les films</span>
+                    </div>
+                </a>
+                <a href="series.html" class="film-card">
+                    <div class="film-poster">
+                        <div class="placeholder-poster">Séries</div>
+                        <div class="play-overlay">
+                            <span class="play-icon"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
+                        </div>
+                    </div>
+                    <div class="film-info">
+                        <h3>Séries</h3>
+                        <span class="film-meta">Voir toutes les séries</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <footer>
+            <p>© Nova Stream — Streaming gratuit</p>
+        </footer>
+    </main>
+
+    <div class="modal-overlay" id="playerModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="close-btn" id="closeModal" aria-label="Fermer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="video-wrapper">
+                <video id="videoPlayer" controls playsinline>
+                    <source id="videoSource" src="" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        if (typeof isLoggedIn === 'function' && isLoggedIn()) {
+            const loginLink = document.getElementById('navLogin');
+            if (loginLink) {
+                loginLink.href = 'admin.html';
+                loginLink.textContent = 'Mon compte';
+            }
+        }
+    </script>
+</body>
+</html>
